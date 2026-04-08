@@ -3,13 +3,18 @@ import * as THREE from 'three';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
 const scene = new THREE.Scene()
+scene.background = new THREE.Color(0x0a0a0f)
+scene.fog = new THREE.Fog(0x0a0a0f, 8, 40)
 const sizes = {
-    width: 800,
-    height: 600
+    width: window.innerWidth,
+    height: window.innerHeight
 }
 const canvas = document.querySelector('canvas#three-ex')
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
 camera.position.z = 3;
+camera.position.x = 0;
+camera.position.y = 1.4;
+
 scene.add(camera)
 
 const renderer = new THREE.WebGLRenderer({
@@ -17,14 +22,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
 
-const mesh_2 = new THREE.Mesh(geometry, material)
-scene.add(mesh_2)
-mesh_2.position.x = -1.5
 
 const controls = new PointerLockControls(camera, document.body);
 controls.addEventListener("lock", function () {
@@ -36,16 +34,6 @@ controls.addEventListener("unlock", function () {
 })
 
 window.requestAnimationFrame(animate)
-
-
-function animate() {
-    renderer.render(scene, camera)
-    window.requestAnimationFrame(animate)
-    if (moveForward) controls.moveForward(0.01);
-    if (moveBackward) controls.moveForward(-0.01);
-    if (moveRight) controls.moveRight(0.01);
-    if (moveLeft) controls.moveRight(-0.01);
-}
 
 const playButton = document.getElementById('play_button'); // Example button
 playButton.addEventListener('click', function () {
@@ -87,3 +75,65 @@ window.addEventListener("keyup", function (e) {
         moveRight = false;
     }
 })
+//sizes for the room
+const length = 50;
+const width = 5;
+const height = 3.5;
+//materials for the walls, floor, and ceiling
+const wallmaterial = new THREE.MeshStandardMaterial({ color: 0xc5c6c7 });
+const floormaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a24 });
+const ceilingmaterial = new THREE.MeshStandardMaterial({ color: 0x222230 });
+//left wall
+const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(length, height), wallmaterial);
+leftWall.rotation.y = Math.PI / 2;
+leftWall.position.set(-width / 2, height / 2, -length / 2);
+scene.add(leftWall);
+//right wall
+const rightWall = new THREE.Mesh(new THREE.PlaneGeometry(length, height), wallmaterial);
+rightWall.rotation.y = -Math.PI / 2;
+rightWall.position.set(width / 2, height / 2, -length / 2);
+scene.add(rightWall);
+//floor
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(width, length), floormaterial);
+floor.rotation.x = -Math.PI / 2;
+floor.position.set(0, 0, -length / 2);
+scene.add(floor);
+//ceiling
+const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(width, length), ceilingmaterial);
+ceiling.rotation.x = Math.PI / 2;
+ceiling.position.set(0, height, - length / 2);
+scene.add(ceiling);
+
+//player size for collision detection
+const playerSize = 0.5;
+//bounds for the player to stay within the room
+const bounds = {
+    minX: -width / 2 + playerSize,
+    maxX: width / 2 - playerSize,
+    minZ: -length + playerSize,
+    maxZ: -playerSize
+}
+
+const lights = new THREE.AmbientLight(0x404060, 0.5);
+
+
+const spacing = length / 5;
+for (let i = 0; i < 5; i++) {
+    const light = new THREE.PointLight(0xFADB38, 5.9, 12);
+    light.position.set(0, height - 0.15, -(i + 0.5) * spacing);
+    scene.add(light);
+}
+scene.add(lights);
+
+function animate() {
+    window.requestAnimationFrame(animate)
+    if (moveForward) controls.moveForward(0.04);
+    if (moveBackward) controls.moveForward(-0.04);
+    if (moveRight) controls.moveRight(0.04);
+    if (moveLeft) controls.moveRight(-0.04);
+
+    // Update camera position based on bounds
+    camera.position.x = Math.max(bounds.minX, Math.min(bounds.maxX, camera.position.x));
+    camera.position.z = Math.max(bounds.minZ, Math.min(bounds.maxZ, camera.position.z));
+    renderer.render(scene, camera)
+}
