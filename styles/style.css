@@ -1,0 +1,12 @@
+#crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: aliceblue;
+    pointer-events: none;
+    box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.5);
+}
