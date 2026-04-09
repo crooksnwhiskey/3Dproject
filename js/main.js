@@ -23,7 +23,6 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 
 
-
 const controls = new PointerLockControls(camera, document.body);
 controls.addEventListener("lock", function () {
     console.log("we are locked")
@@ -85,24 +84,23 @@ const floormaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a24 });
 const ceilingmaterial = new THREE.MeshStandardMaterial({ color: 0x222230 });
 const buttonOnematerial = new THREE.MeshStandardMaterial({ color: 0x222230 });
 const buttonTwomaterial = new THREE.MeshStandardMaterial({ color: 0x222230 });
-const tempObsMaterial = new THREE.MeshStandardMaterial({ color: 0xff3300 });
+const tempObsMaterial = new THREE.MeshStandardMaterial({ color: 0xc5c6c7 });
+// 0xff3300
+
 
 
 
 const buttonOne = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.5), buttonOnematerial);
-buttonOne.position.set(-2.49, 1.75, -50);
-buttonOne.rotation.y = Math.PI / 2;
 scene.add(buttonOne);
+buttonRand1();
 
 const buttonTwo = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.5), buttonTwomaterial);
-buttonTwo.position.set(2.49, 0.75, -90.8);
-buttonTwo.rotation.y = -Math.PI / 2;
 scene.add(buttonTwo);
+buttonRand2()
 
 const buttonThree = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 0.3), buttonTwomaterial);
-buttonThree.position.set(2.49, 3, -130.3);
-buttonThree.rotation.y = -Math.PI / 2;
 scene.add(buttonThree);
+buttonRand3()
 
 let removableWall1 = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
@@ -270,17 +268,64 @@ const bounds = {
 const lights = new THREE.AmbientLight(0x404060, 0.5);
 
 
-const spacing = length / 5;
-for (let i = 0; i < 5; i++) {
+const spacing = length / 10;
+for (let i = 0; i < 10; i++) {
     const light = new THREE.PointLight(0xFADB38, 5.9, 12);
     light.position.set(0, height - 0.15, -(i + 0.5) * spacing);
     scene.add(light);
 }
 scene.add(lights);
+function buttonRand1() {
+    const buttonSpotNumber = Math.random();
+    if (buttonSpotNumber < .33) {
+        buttonOne.rotation.y = Math.PI / 2;
+        buttonOne.position.set(-2.49, 1.75, -50);
+    }
+    if (buttonSpotNumber > .33 && buttonSpotNumber < .66) {
+        buttonOne.rotation.y = -Math.PI / 2;
+        buttonOne.position.set(2.49, 1.75, -50);
+    }
+    if (buttonSpotNumber > .66) {
+        buttonOne.rotation.y = Math.PI / 2;
+        buttonOne.position.set(-2.49, 1.75, -25);
+    }
+}
+function buttonRand2() {
+    const buttonSpotNumber = Math.random();
+    if (buttonSpotNumber < .33) {
+        buttonTwo.position.set(2.49, 0.75, -90.8);
+        buttonTwo.rotation.y = -Math.PI / 2;
+    }
+    if (buttonSpotNumber > .33 && buttonSpotNumber < .66) {
+        buttonTwo.position.set(-2.49, 0.75, -85.8);
+        buttonTwo.rotation.y = Math.PI / 2;
+    }
+    if (buttonSpotNumber > .66) {
+        buttonTwo.position.set(0, 0.75, -95.51);
+        buttonTwo.rotation.y = -Math.PI;
+    }
+    console.log(buttonTwo.position)
+}
+function buttonRand3() {
+    const buttonSpotNumber = Math.random();
+    if (buttonSpotNumber < .33) {
+        buttonThree.position.set(2.49, 3, -130.3);
+        buttonThree.rotation.y = -Math.PI / 2;
+    }
+    if (buttonSpotNumber > .33 && buttonSpotNumber < .66) {
+        buttonThree.position.set(2.49, 3.1, -142);
+        buttonThree.rotation.y = -Math.PI / 2;
+    }
+    if (buttonSpotNumber > .66) {
+        buttonThree.position.set(0.4, 3.46, -150);
+        buttonThree.rotation.x = Math.PI / 2;
+
+    }
+}
 
 function animate() {
     window.requestAnimationFrame(animate)
-    if (moveForward) controls.moveForward(0.04);
+    if (moveForward) controls.moveForward(0.20);
     if (moveBackward) controls.moveForward(-0.04);
     if (moveRight) controls.moveRight(0.04);
     if (moveLeft) controls.moveRight(-0.04);
