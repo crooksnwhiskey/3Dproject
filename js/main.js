@@ -76,7 +76,7 @@ window.addEventListener("keyup", function (e) {
     }
 })
 //sizes for the room
-const length = 150;
+const length = 200;
 const width = 5;
 const height = 3.5;
 //materials for the walls, floor, and ceiling and buttons
@@ -90,28 +90,40 @@ const tempObsMaterial = new THREE.MeshStandardMaterial({ color: 0xff3300 });
 
 
 const buttonOne = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.5), buttonOnematerial);
-buttonOne.position.set(-width / 2 + 0.01, height / 2, -length / 3);
+buttonOne.position.set(-2.49, 1.75, -50);
 buttonOne.rotation.y = Math.PI / 2;
 scene.add(buttonOne);
 
 const buttonTwo = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.5), buttonTwomaterial);
-buttonTwo.position.set(width / 2 - 0.01, height / 2 - 1, -length * 2 / 3 + 9.2);
+buttonTwo.position.set(2.49, 0.75, -90.8);
 buttonTwo.rotation.y = -Math.PI / 2;
 scene.add(buttonTwo);
+
+const buttonThree = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 0.3), buttonTwomaterial);
+buttonThree.position.set(2.49, 3, -130.3);
+buttonThree.rotation.y = -Math.PI / 2;
+scene.add(buttonThree);
 
 let removableWall1 = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
     new THREE.MeshStandardMaterial({ color: 0x444444 })
 );
-removableWall1.position.set(0, height / 2, -length / 3 - 10);
+removableWall1.position.set(0, 1.75, -60);
 scene.add(removableWall1);
 
 let removableWall2 = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
     new THREE.MeshStandardMaterial({ color: 0x444444 })
 );
-removableWall2.position.set(0, height / 2, -length * 2 / 3 - 10);
+removableWall2.position.set(0, 1.75, -110);
 scene.add(removableWall2);
+
+let removableWall3 = new THREE.Mesh(
+    new THREE.PlaneGeometry(width, height),
+    new THREE.MeshStandardMaterial({ color: 0x444444 })
+);
+removableWall3.position.set(0, 1.75, -160);
+scene.add(removableWall3);
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -137,6 +149,13 @@ function onMouseClick(event) {
         removeWall2();
         return;
     }
+    const hitsThree = raycaster.intersectObject(buttonThree);
+    if (hitsThree.length > 0) {
+        buttonThree.material.color.setHex(0xff0000);
+        setTimeout(() => buttonThree.material.color.setHex(0x222230), 200);
+        removeWall3();
+        return;
+    }
 }
 
 function removeWall1() {
@@ -153,6 +172,14 @@ function removeWall2() {
         removableWall2.geometry.dispose();
         removableWall2.material.dispose();
         removableWall2 = null;
+    }
+}
+function removeWall3() {
+    if (removableWall3) {
+        scene.remove(removableWall3);
+        removableWall3.geometry.dispose();
+        removableWall3.material.dispose();
+        removableWall3 = null;
     }
 }
 
@@ -200,6 +227,34 @@ scene.add(obs4b);
 const obs5b = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
 obs5b.position.set(0, height / 2, -95);
 scene.add(obs5b);
+
+
+const obs1c = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs1c.position.set(-2, height / 2, -122);
+obs1c.rotation.y = -Math.PI / 3;
+scene.add(obs1c);
+
+const obs2c = new THREE.Mesh(new THREE.BoxGeometry(2, 10, 1), tempObsMaterial);
+obs2c.position.set(2, height / 2, -130);
+obs2c.rotation.y = -Math.PI / 3;
+scene.add(obs2c);
+
+const obs3c = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 3), tempObsMaterial);
+obs3c.position.set(2, height / 2, -135);
+obs3c.rotation.y = -Math.PI / 3;
+scene.add(obs3c);
+
+const obs4c = new THREE.Mesh(new THREE.BoxGeometry(2, 10, 1), tempObsMaterial);
+obs4c.position.set(2, height / 2, -140);
+obs4c.rotation.y = -Math.PI / 3;
+obs4c.rotation.x = -Math.PI / 4;
+scene.add(obs4c);
+
+const obs5c = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 2), tempObsMaterial);
+obs5c.position.set(-2, height / 2, -130);
+obs5c.rotation.y = -Math.PI / 2.5;
+obs5c.rotation.x = -Math.PI / 2.5;
+scene.add(obs5c);
 
 
 //player size for collision detection
