@@ -2,6 +2,8 @@ import * as THREE from 'three';
 
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
+
+
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x0a0a0f)
 scene.fog = new THREE.Fog(0x0a0a0f, 8, 40)
@@ -74,20 +76,40 @@ window.addEventListener("keyup", function (e) {
         moveRight = false;
     }
 })
+
+const textureLoader = new THREE.TextureLoader();
+//from official three.js github
+const floorRoughness = textureLoader.load('textures/hardwood2_roughness.jpg');
+const floorDiffuse = textureLoader.load('textures/hardwood2_diffuse.jpg');
+const floorBump = textureLoader.load('textures/hardwood2_bump.jpg');
 //sizes for the room
 const length = 200;
 const width = 5;
 const height = 3.5;
 //materials for the walls, floor, and ceiling and buttons
 const wallmaterial = new THREE.MeshStandardMaterial({ color: 0xc5c6c7 });
-const floormaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a24 });
-const ceilingmaterial = new THREE.MeshStandardMaterial({ color: 0x222230 });
+const floormaterial = new THREE.MeshStandardMaterial({
+
+    map: floorDiffuse,
+    bumpMap: floorBump,
+    roughnessMap: floorRoughness,
+    color: 0x898F89
+});
+const ceilingmaterial = new THREE.MeshStandardMaterial({ color: 0xc5c6c7 });
 const buttonOnematerial = new THREE.MeshStandardMaterial({ color: 0x222230 });
 const buttonTwomaterial = new THREE.MeshStandardMaterial({ color: 0x222230 });
 const tempObsMaterial = new THREE.MeshStandardMaterial({ color: 0xc5c6c7 });
+
+
 // 0xff3300
+//https://threejs.org/docs/#Texture.repeat
+floorDiffuse.repeat.set(3, 100);
+floorBump.repeat.set(3, 100);
+floorRoughness.repeat.set(3, 100);
 
-
+floorDiffuse.wrapS = floorDiffuse.wrapT = THREE.RepeatWrapping;
+floorBump.wrapS = floorBump.wrapT = THREE.RepeatWrapping;
+floorRoughness.wrapS = floorRoughness.wrapT = THREE.RepeatWrapping;
 
 
 const buttonOne = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.5), buttonOnematerial);
