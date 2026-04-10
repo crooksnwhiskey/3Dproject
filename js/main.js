@@ -127,10 +127,8 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 function onMouseClick(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-    raycaster.setFromCamera(mouse, camera);
+    raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
 
     const hitsOne = raycaster.intersectObject(buttonOne);
     if (hitsOne.length > 0) {
