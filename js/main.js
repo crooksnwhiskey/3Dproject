@@ -274,6 +274,34 @@ obs5c.rotation.y = -Math.PI / 2.5;
 obs5c.rotation.x = -Math.PI / 2.5;
 scene.add(obs5c);
 
+const obs1d = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 3), tempObsMaterial);
+obs1d.position.set(-2, height / 2, -190);
+obs1d.rotation.y = -Math.PI / 3;
+scene.add(obs1d);
+
+const obs2d = new THREE.Mesh(new THREE.BoxGeometry(2, 5, 3), tempObsMaterial);
+obs2d.position.set(2, height / 2, -180);
+obs2d.rotation.y = -Math.PI / 4;
+obs2d.rotation.z = -Math.PI / 4;
+scene.add(obs2d);
+
+const obs3d = new THREE.Mesh(new THREE.BoxGeometry(5, 6, 2), tempObsMaterial);
+obs3d.position.set(-5, height / 2, -177);
+obs3d.rotation.y = -Math.PI / 4;
+obs3d.rotation.x = -Math.PI / 2.5;
+scene.add(obs3d);
+
+const obs4d = new THREE.Mesh(new THREE.BoxGeometry(7, 6, 3), tempObsMaterial);
+obs4d.position.set(-4, height / 2, -170);
+obs4d.rotation.x = -Math.PI / 2.5;
+scene.add(obs4d);
+
+const obs5d = new THREE.Mesh(new THREE.BoxGeometry(2, 10, 3), tempObsMaterial);
+obs5d.position.set(4, height / 2, -167);
+obs5d.rotation.x = -Math.PI / 5;
+obs5d.rotation.z = -Math.PI / 5;
+scene.add(obs5d);
+
 
 //player size for collision detection
 const playerSize = 0.5;
