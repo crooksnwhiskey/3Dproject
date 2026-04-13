@@ -185,6 +185,7 @@ function removeWall1() {
         removableWall1.geometry.dispose();
         removableWall1.material.dispose();
         removableWall1 = null;
+        bounds.minZ = removableWall2.position.z + playerSize;
     }
 }
 function removeWall2() {
@@ -193,6 +194,7 @@ function removeWall2() {
         removableWall2.geometry.dispose();
         removableWall2.material.dispose();
         removableWall2 = null;
+        bounds.minZ = removableWall3.position.z + playerSize;
     }
 }
 function removeWall3() {
@@ -201,6 +203,7 @@ function removeWall3() {
         removableWall3.geometry.dispose();
         removableWall3.material.dispose();
         removableWall3 = null;
+        bounds.minZ = -length + playerSize;
     }
 }
 
@@ -312,7 +315,7 @@ const playerSize = 0.5;
 const bounds = {
     minX: -width / 2 + playerSize,
     maxX: width / 2 - playerSize,
-    minZ: -length + playerSize,
+    minZ: removableWall1.position.z + playerSize,
     maxZ: -playerSize
 }
 
