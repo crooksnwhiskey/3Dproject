@@ -1,3 +1,15 @@
+.bitcount {
+    font-family: "Bitcount", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: bold;
+    font-variation-settings:
+        "slnt" 0,
+        "CRSV" 0.4,
+        "ELSH" 0,
+        "ELXP" 0;
+}
+
 #crosshair {
     position: absolute;
     top: 50%;
@@ -14,4 +26,22 @@
 #game-screen {
     position: relative;
     display: inline-block;
+}
+
+
+#play_button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Bitcount";
+    font-size: 44px;
+    padding: 50px 110px;
+    background: #232323a9;
+    cursor: pointer;
+    border-radius: 4px;
+    letter-spacing: 2px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 65%);
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 65%);
+
 }

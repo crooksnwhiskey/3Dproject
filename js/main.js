@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
+
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x0a0a0f)
 scene.fog = new THREE.Fog(0x0a0a0f, 8, 40)
@@ -37,7 +38,18 @@ window.requestAnimationFrame(animate)
 const playButton = document.getElementById('play_button'); // Example button
 playButton.addEventListener('click', function () {
     controls.lock();
+
 }, false)
+
+controls.addEventListener('lock', function () {
+    playButton.style.display = 'none';
+    crosshair.style.opacity = '1';
+});
+
+controls.addEventListener('unlock', function () {
+    playButton.style.display = 'block';
+    crosshair.style.opacity = '0';
+});
 
 let moveForward = false;
 let moveBackward = false;
