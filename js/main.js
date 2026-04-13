@@ -2,8 +2,6 @@ import * as THREE from 'three';
 
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
-
-
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x0a0a0f)
 scene.fog = new THREE.Fog(0x0a0a0f, 8, 40)
@@ -46,6 +44,7 @@ let moveBackward = false;
 let moveRight = false;
 let moveLeft = false;
 let isSprinting = false;
+let movement = false;
 window.addEventListener("keydown", function (e) {
     if (e.key === "w") {
         moveForward = true;
@@ -53,7 +52,6 @@ window.addEventListener("keydown", function (e) {
     if (e.key === "s") {
         moveBackward = true;
     }
-
     if (e.key === "a") {
         moveLeft = true;
     }
@@ -69,7 +67,6 @@ window.addEventListener("keyup", function (e) {
     if (e.key === "w") {
         moveForward = false;
     }
-
     if (e.key === "s") {
         moveBackward = false;
     }
@@ -380,11 +377,14 @@ function buttonRand3() {
 
 function animate() {
     window.requestAnimationFrame(animate)
-    if (moveForward) controls.moveForward(0.04);
-    if (moveForward && isSprinting) controls.moveForward(0.20);
-    if (moveBackward) controls.moveForward(-0.04);
-    if (moveRight) controls.moveRight(0.04);
-    if (moveLeft) controls.moveRight(-0.04);
+
+    const walkSpeed = isSprinting ? 0.20 : 0.04;
+
+    if (moveForward) controls.moveForward(walkSpeed);
+    if (moveBackward) controls.moveForward(-walkSpeed);
+    if (moveRight) controls.moveRight(walkSpeed);
+    if (moveLeft) controls.moveRight(-walkSpeed);
+
 
     // Update camera position based on bounds
     camera.position.x = Math.max(bounds.minX, Math.min(bounds.maxX, camera.position.x));
