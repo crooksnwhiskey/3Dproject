@@ -45,6 +45,7 @@ let moveForward = false;
 let moveBackward = false;
 let moveRight = false;
 let moveLeft = false;
+let isSprinting = false;
 window.addEventListener("keydown", function (e) {
     if (e.key === "w") {
         moveForward = true;
@@ -58,6 +59,9 @@ window.addEventListener("keydown", function (e) {
     }
     if (e.key === "d") {
         moveRight = true;
+    }
+    if (e.key == "Shift") {
+        isSprinting = true;
     }
 })
 
@@ -74,6 +78,9 @@ window.addEventListener("keyup", function (e) {
     }
     if (e.key === "d") {
         moveRight = false;
+    }
+    if (e.key == "Shift") {
+        isSprinting = false;
     }
 })
 
@@ -373,7 +380,8 @@ function buttonRand3() {
 
 function animate() {
     window.requestAnimationFrame(animate)
-    if (moveForward) controls.moveForward(0.20);
+    if (moveForward) controls.moveForward(0.04);
+    if (moveForward && isSprinting) controls.moveForward(0.20);
     if (moveBackward) controls.moveForward(-0.04);
     if (moveRight) controls.moveRight(0.04);
     if (moveLeft) controls.moveRight(-0.04);
