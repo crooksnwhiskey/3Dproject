@@ -44,7 +44,6 @@ let moveBackward = false;
 let moveRight = false;
 let moveLeft = false;
 let isSprinting = false;
-let movement = false;
 window.addEventListener("keydown", function (e) {
     if (e.key === "w") {
         moveForward = true;
@@ -384,7 +383,6 @@ function animate() {
     if (moveBackward) controls.moveForward(-walkSpeed);
     if (moveRight) controls.moveRight(walkSpeed);
     if (moveLeft) controls.moveRight(-walkSpeed);
-
 
     // Update camera position based on bounds
     camera.position.x = Math.max(bounds.minX, Math.min(bounds.maxX, camera.position.x));
