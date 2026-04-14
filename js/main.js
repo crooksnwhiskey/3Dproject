@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
 
@@ -219,8 +219,15 @@ function removeWall3() {
     }
 }
 
-
-
+// Camera Model from https://sketchfab.com/3d-models/surveillance-camera-cd2a7ca0211d4fc08acc88ce868c2f8f
+const loader = new GLTFLoader();
+loader.load('models/camera.glb', (gltf) => {
+    const cameraModel = gltf.scene;
+    scene.add(cameraModel);
+    cameraModel.scale.set(0.1, 0.1, 0.1);
+    cameraModel.position.set(0, 3, 0);
+    cameraModel.rotation.y = Math.PI;
+});
 
 window.addEventListener('click', onMouseClick);
 //left wall
@@ -243,6 +250,8 @@ const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(width, length), ceilingma
 ceiling.rotation.x = Math.PI / 2;
 ceiling.position.set(0, height, - length / 2);
 scene.add(ceiling);
+
+
 
 const obs1b = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
 obs1b.position.set(-2, height / 2, -85);
