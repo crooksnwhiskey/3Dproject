@@ -221,8 +221,9 @@ function removeWall3() {
 
 // Camera Model from https://sketchfab.com/3d-models/surveillance-camera-cd2a7ca0211d4fc08acc88ce868c2f8f
 const loader = new GLTFLoader();
+let cameraModel
 loader.load('models/camera.glb', (gltf) => {
-    const cameraModel = gltf.scene;
+    cameraModel = gltf.scene;
     scene.add(cameraModel);
     cameraModel.scale.set(0.1, 0.1, 0.1);
     cameraModel.position.set(0, 3, 0);
@@ -394,11 +395,14 @@ function buttonRand3() {
     if (buttonSpotNumber > .66) {
         buttonThree.position.set(0.4, 3.46, -150);
         buttonThree.rotation.x = Math.PI / 2;
-
     }
 }
 
 function animate() {
+
+    if (cameraModel) {
+        cameraModel.lookAt(camera.position)
+    }
     window.requestAnimationFrame(animate)
 
     const walkSpeed = isSprinting ? 0.20 : 0.04;
