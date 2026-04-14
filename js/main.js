@@ -220,13 +220,27 @@ function removeWall3() {
 }
 
 // Camera Model from https://sketchfab.com/3d-models/surveillance-camera-cd2a7ca0211d4fc08acc88ce868c2f8f
+const cctv = [];
 const loader = new GLTFLoader();
-loader.load('models/camera.glb', (gltf) => {
-    const cameraModel = gltf.scene;
-    scene.add(cameraModel);
-    cameraModel.scale.set(0.1, 0.1, 0.1);
-    cameraModel.position.set(0, 3, 0);
-    cameraModel.rotation.y = Math.PI;
+
+const cctvPositions = [
+    { x: -2.1, z: -15 },
+    { x: 2.2, z: -30 },
+    { x: -2.2, z: -45 },
+    { x: 2.2, z: -60 },
+    { x: -2.2, z: -75 },
+    { x: 2.2, z: -90 },
+];
+
+cctvPositions.forEach(pos => {
+    loader.load('models/camera.glb', (gltf) => {
+        const model = gltf.scene;
+        model.scale.set(0.2, 0.2, 0.1);
+        scene.add(model);
+        model.position.set(pos.x, 3, pos.z);
+        cctv.push(model);
+
+    });
 });
 
 window.addEventListener('click', onMouseClick);
@@ -403,11 +417,15 @@ function animate() {
 
     const walkSpeed = isSprinting ? 0.20 : 0.04;
 
+
     if (moveForward) controls.moveForward(walkSpeed);
     if (moveBackward) controls.moveForward(-walkSpeed);
     if (moveRight) controls.moveRight(walkSpeed);
     if (moveLeft) controls.moveRight(-walkSpeed);
 
+    cctv.forEach(cam => {
+        cam.lookAt(camera.position);
+    });
     // Update camera position based on bounds
     camera.position.x = Math.max(bounds.minX, Math.min(bounds.maxX, camera.position.x));
     camera.position.z = Math.max(bounds.minZ, Math.min(bounds.maxZ, camera.position.z));
