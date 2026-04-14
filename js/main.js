@@ -223,12 +223,18 @@ function removeWall3() {
 const cctv = [];
 const loader = new GLTFLoader();
 const cctvPositions = [
-    { x: -2.1, z: -15 },
-    { x: 2.2, z: -30 },
-    { x: -2.2, z: -45 },
-    { x: 2.2, z: -60 },
-    { x: -2.2, z: -75 },
-    { x: 2.2, z: -90 },
+    { x: -2.1, z: -20 },
+    { x: 2.2, z: -40 },
+    { x: -2.2, z: -60 },
+    { x: 2.2, z: -80 },
+    { x: -2.2, z: -100 },
+    { x: 2.2, z: -120 },
+    { x: -2.1, z: -140 },
+    { x: 2.2, z: -160 },
+    { x: -2.2, z: -180 },
+    { x: 2.2, z: -200 },
+    { x: -2.2, z: -220 },
+    { x: 2.2, z: -240 },
 ];
 
 cctvPositions.forEach(pos => {
