@@ -83,7 +83,7 @@ window.addEventListener("keydown", function (e) {
     // teleporting to fix stuff easier                          READ THIS< ALEX ik emmets ass aint doing it
     if (e.keyCode == 84) {
         bounds.minZ = -length + playerSize;
-        camera.position.set(0, camera.position.y, -180);
+        camera.position.set(0, camera.position.y, -220);
     }
 })
 
@@ -156,6 +156,10 @@ const buttonFour = new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.1), buttonTwoma
 scene.add(buttonFour);
 buttonRand4()
 
+const buttonFive = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.5), buttonTwomaterial);
+scene.add(buttonFive);
+buttonRand5()
+
 let removableWall1 = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
     new THREE.MeshStandardMaterial({ color: 0x444444 })
@@ -182,6 +186,12 @@ let removableWall4 = new THREE.Mesh(
 );
 removableWall4.position.set(0, 1.75, -210);
 scene.add(removableWall4);
+let removableWall5 = new THREE.Mesh(
+    new THREE.PlaneGeometry(width, height),
+    new THREE.MeshStandardMaterial({ color: 0x444444 })
+);
+removableWall5.position.set(0, 1.75, -260);
+scene.add(removableWall5);
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -217,6 +227,13 @@ function onMouseClick(event) {
         buttonFour.material.color.setHex(0xff0000);
         setTimeout(() => buttonThree.material.color.setHex(0x222230), 200);
         removeWall4();
+        return;
+    }
+    const hitsFive = raycaster.intersectObject(buttonFive);
+    if (hitsFive.length > 0) {
+        buttonFive.material.color.setHex(0xff0000);
+        setTimeout(() => buttonFive.material.color.setHex(0x222230), 200);
+        removeWall5();
         return;
     }
 }
@@ -256,8 +273,17 @@ function removeWall4() {
         removableWall4 = null;
         bounds.minZ = -length + playerSize;
     }
-}
 
+}
+function removeWall5() {
+    if (removableWall5) {
+        scene.remove(removableWall5);
+        removableWall5.geometry.dispose();
+        removableWall5.material.dispose();
+        removableWall5 = null;
+        bounds.minZ = -length + playerSize;
+    }
+}
 // Camera Model from https://sketchfab.com/3d-models/surveillance-camera-cd2a7ca0211d4fc08acc88ce868c2f8f
 const cctv = [];
 const loader = new GLTFLoader();
@@ -286,6 +312,38 @@ cctvPositions.forEach(pos => {
 
     });
 
+});
+const pillarStartZ = -220;
+const pillarStartX = [
+    { x: -1.9 }, { x: 0.3 },
+    { x: 1.8 }, { x: -0.5 },
+    { x: 0.1 }, { x: 1.6 },
+    { x: -1.7 }, { x: 0.8 },
+    { x: 1.2 }, { x: -0.2 },
+    { x: -1.4 }, { x: 0.6 },
+    { x: 1.9 }, { x: -0.9 },
+    { x: 0.4 }, { x: -1.6 },
+    { x: 1.5 }, { x: -0.1 },
+    { x: -1.8 }, { x: 0.7 },
+    { x: 1.3 }, { x: -0.4 },
+    { x: -1.5 }, { x: 0.2 },
+    { x: 1.7 }, { x: -0.6 },
+    { x: -0.3 }, { x: 1.4 },
+    { x: -1.6 }, { x: 0.5 },
+    { x: 1.4 }, { x: -0.8 },
+    { x: -1.3 }, { x: 0.9 },
+    { x: 1.6 }, { x: -0.7 },
+    { x: -1.4 }, { x: 0.3 },
+];
+
+pillarStartX.forEach((pillar, i) => {
+    loader.load('models/pillar.glb', (gltf) => {
+        const pillarModel = gltf.scene;
+        pillarModel.scale.set(1, 1, 1);
+        pillarModel.position.set(pillar.x, 0, pillarStartZ - 1 * i);
+        scene.add(pillarModel);
+        cctv.push(pillarModel);
+    });
 });
 
 window.addEventListener('click', onMouseClick);
@@ -481,6 +539,28 @@ function buttonRand4() {
         buttonFour.rotation.x = -Math.PI / 2;
     }
 }
+function buttonRand5() {
+    const buttonSpotNumber = Math.random();
+    if (buttonSpotNumber < .33) {
+        buttonFive.position.set(-1.4, 0.1, -233.5);
+        buttonFive.rotation.x = -Math.PI / 2;
+
+    }
+    if (buttonSpotNumber > .33 && buttonSpotNumber < .66) {
+        buttonFive.position.set(0, 0.1, -255);
+
+
+        buttonFive.rotation.x = -Math.PI / 2;
+
+    }
+    if (buttonSpotNumber > .66) {
+        buttonFive.position.set(1.8, 0.1, -223.5);
+
+
+        buttonFive.rotation.x = -Math.PI / 2;
+
+    }
+}
 
 function animate() {
     window.requestAnimationFrame(animate)
@@ -496,7 +576,7 @@ function animate() {
     cctv.forEach(cam => {
         cam.lookAt(camera.position);
     });
-    // Update camera position based on bounds
+    //Update camera position based on bounds
     camera.position.x = Math.max(bounds.minX, Math.min(bounds.maxX, camera.position.x));
     camera.position.z = Math.max(bounds.minZ, Math.min(bounds.maxZ, camera.position.z));
     renderer.render(scene, camera)
