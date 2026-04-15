@@ -72,6 +72,11 @@ window.addEventListener("keydown", function (e) {
     if (e.keyCode == 16) {
         isSprinting = true;
     }
+    // teleporting to fix stuff easier                          READ THIS< ALEX ik emmets ass aint doing it
+    if (e.keyCode == 84) {
+        bounds.minZ = -length + playerSize;
+        camera.position.set(0, camera.position.y, -180);
+    }
 })
 
 window.addEventListener("keyup", function (e) {
@@ -98,7 +103,7 @@ const floorRoughness = textureLoader.load('textures/hardwood2_roughness.jpg');
 const floorDiffuse = textureLoader.load('textures/hardwood2_diffuse.jpg');
 const floorBump = textureLoader.load('textures/hardwood2_bump.jpg');
 //sizes for the room
-const length = 200;
+const length = 350;
 const width = 5;
 const height = 3.5;
 //materials for the walls, floor, and ceiling and buttons
@@ -139,6 +144,10 @@ const buttonThree = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 0.3), buttonTwom
 scene.add(buttonThree);
 buttonRand3()
 
+const buttonFour = new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.1), buttonTwomaterial);
+scene.add(buttonFour);
+buttonRand4()
+
 let removableWall1 = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
     new THREE.MeshStandardMaterial({ color: 0x444444 })
@@ -159,6 +168,12 @@ let removableWall3 = new THREE.Mesh(
 );
 removableWall3.position.set(0, 1.75, -160);
 scene.add(removableWall3);
+let removableWall4 = new THREE.Mesh(
+    new THREE.PlaneGeometry(width, height),
+    new THREE.MeshStandardMaterial({ color: 0x444444 })
+);
+removableWall4.position.set(0, 1.75, -210);
+scene.add(removableWall4);
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -189,6 +204,13 @@ function onMouseClick(event) {
         removeWall3();
         return;
     }
+    const hitsFour = raycaster.intersectObject(buttonFour);
+    if (hitsFour.length > 0) {
+        buttonFour.material.color.setHex(0xff0000);
+        setTimeout(() => buttonThree.material.color.setHex(0x222230), 200);
+        removeWall4();
+        return;
+    }
 }
 
 function removeWall1() {
@@ -215,6 +237,15 @@ function removeWall3() {
         removableWall3.geometry.dispose();
         removableWall3.material.dispose();
         removableWall3 = null;
+        bounds.minZ = -length + playerSize;
+    }
+}
+function removeWall4() {
+    if (removableWall4) {
+        scene.remove(removableWall4);
+        removableWall4.geometry.dispose();
+        removableWall4.material.dispose();
+        removableWall4 = null;
         bounds.minZ = -length + playerSize;
     }
 }
@@ -326,10 +357,10 @@ obs1d.position.set(-2, height / 2, -190);
 obs1d.rotation.y = -Math.PI / 3;
 scene.add(obs1d);
 
-const obs2d = new THREE.Mesh(new THREE.BoxGeometry(2, 5, 3), tempObsMaterial);
-obs2d.position.set(2, height / 2, -180);
-obs2d.rotation.y = -Math.PI / 4;
-obs2d.rotation.z = -Math.PI / 4;
+const obs2d = new THREE.Mesh(new THREE.BoxGeometry(1, 5, 4), tempObsMaterial);
+obs2d.position.set(3, height / 2, -180);
+obs2d.rotation.x = -Math.PI / 3;
+obs2d.rotation.z = -Math.PI / 7;
 scene.add(obs2d);
 
 const obs3d = new THREE.Mesh(new THREE.BoxGeometry(5, 6, 2), tempObsMaterial);
@@ -349,6 +380,16 @@ obs5d.rotation.x = -Math.PI / 5;
 obs5d.rotation.z = -Math.PI / 5;
 scene.add(obs5d);
 
+const obs6d = new THREE.Mesh(new THREE.BoxGeometry(10, 2, 3), tempObsMaterial);
+obs6d.position.set(4, 4, -168);
+obs6d.rotation.x = -Math.PI / 5;
+scene.add(obs6d);
+
+const obs7d = new THREE.Mesh(new THREE.BoxGeometry(20, 5, 3), tempObsMaterial);
+obs7d.position.set(4, 5, -180);
+obs7d.rotation.y = -Math.PI;
+scene.add(obs7d);
+
 
 //player size for collision detection
 const playerSize = 0.5;
@@ -363,8 +404,8 @@ const bounds = {
 const lights = new THREE.AmbientLight(0x404060, 0.5);
 
 
-const spacing = length / 10;
-for (let i = 0; i < 10; i++) {
+const spacing = length / 20;
+for (let i = 0; i < 20; i++) {
     const light = new THREE.PointLight(0xFADB38, 5.9, 12);
     light.position.set(0, height - 0.15, -(i + 0.5) * spacing);
     scene.add(light);
@@ -414,6 +455,22 @@ function buttonRand3() {
     if (buttonSpotNumber > .66) {
         buttonThree.position.set(0.4, 3.46, -150);
         buttonThree.rotation.x = Math.PI / 2;
+    }
+}
+function buttonRand4() {
+    const buttonSpotNumber = .68;
+    if (buttonSpotNumber < .33) {
+        buttonFour.position.set(2.48, 0.1, -167.7);
+        buttonFour.rotation.y = -Math.PI / 2;
+        buttonFour.rotation.z = 45
+    }
+    if (buttonSpotNumber > .33 && buttonSpotNumber < .66) {
+        buttonFour.position.set(-0.8, 3.4, -169.5);
+        buttonFour.rotation.x = 39
+    }
+    if (buttonSpotNumber > .66) {
+        buttonFour.position.set(2.48, 0.01, -178.35);
+        buttonFour.rotation.x = -Math.PI / 2;
     }
 }
 
