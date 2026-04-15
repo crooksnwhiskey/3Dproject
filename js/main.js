@@ -7,8 +7,7 @@ const audio = document.getElementById('background-music');
 // Enable looping via the property
 audio.loop = true;
 
-// Play the audio
-audio.play();
+
 
 
 const scene = new THREE.Scene()
@@ -46,6 +45,8 @@ window.requestAnimationFrame(animate)
 const playButton = document.getElementById('play_button'); // Example button
 playButton.addEventListener('click', function () {
     controls.lock();
+    // Play the audio
+    audio.play();
 
 }, false)
 
