@@ -2,6 +2,14 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
+const audio = document.getElementById('background-music');
+
+// Enable looping via the property
+audio.loop = true;
+
+// Play the audio
+audio.play();
+
 
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x0a0a0f)
@@ -458,7 +466,7 @@ function buttonRand3() {
     }
 }
 function buttonRand4() {
-    const buttonSpotNumber = .68;
+    const buttonSpotNumber = Math.random();
     if (buttonSpotNumber < .33) {
         buttonFour.position.set(2.48, 0.1, -167.7);
         buttonFour.rotation.y = -Math.PI / 2;

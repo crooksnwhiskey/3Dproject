@@ -23,6 +23,10 @@
     box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.5);
 }
 
+iframe {
+    display: none;
+}
+
 #game-screen {
     position: relative;
     display: inline-block;
