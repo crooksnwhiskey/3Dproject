@@ -57,37 +57,37 @@ let moveRight = false;
 let moveLeft = false;
 let isSprinting = false;
 window.addEventListener("keydown", function (e) {
-    if (e.key === "w") {
+    if (e.keyCode === 87) {
         moveForward = true;
     }
-    if (e.key === "s") {
+    if (e.keyCode === 83) {
         moveBackward = true;
     }
-    if (e.key === "a") {
+    if (e.keyCode === 65) {
         moveLeft = true;
     }
-    if (e.key === "d") {
+    if (e.keyCode === 68) {
         moveRight = true;
     }
-    if (e.key == "Shift") {
+    if (e.keyCode == 16) {
         isSprinting = true;
     }
 })
 
 window.addEventListener("keyup", function (e) {
-    if (e.key === "w") {
+    if (e.keyCode === 87) {
         moveForward = false;
     }
-    if (e.key === "s") {
+    if (e.keyCode === 83) {
         moveBackward = false;
     }
-    if (e.key === "a") {
+    if (e.keyCode === 65) {
         moveLeft = false;
     }
-    if (e.key === "d") {
+    if (e.keyCode === 68) {
         moveRight = false;
     }
-    if (e.key == "Shift") {
+    if (e.keyCode == 16) {
         isSprinting = false;
     }
 })
