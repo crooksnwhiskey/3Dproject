@@ -7,9 +7,6 @@ const audio = document.getElementById('background-music');
 // Enable looping via the property
 audio.loop = true;
 
-
-
-
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x0a0a0f)
 scene.fog = new THREE.Fog(0x0a0a0f, 8, 40)
@@ -81,7 +78,7 @@ window.addEventListener("keydown", function (e) {
     if (e.keyCode == 16) {
         isSprinting = true;
     }
-    // teleporting to fix stuff easier                          READ THIS< ALEX ik emmets ass aint doing it
+    // teleporting to fix stuff easier                          READ THIS< ALEX ik emmets ass aint doing it <- jackass - emmett
     if (e.keyCode == 84) {
         bounds.minZ = -length + playerSize;
         camera.position.set(0, camera.position.y, -220);
@@ -263,7 +260,7 @@ function removeWall3() {
         removableWall3.geometry.dispose();
         removableWall3.material.dispose();
         removableWall3 = null;
-        bounds.minZ = -length + playerSize;
+        bounds.minZ = removableWall4.position.z + playerSize;
     }
 }
 function removeWall4() {
@@ -272,7 +269,7 @@ function removeWall4() {
         removableWall4.geometry.dispose();
         removableWall4.material.dispose();
         removableWall4 = null;
-        bounds.minZ = -length + playerSize;
+        bounds.minZ = removableWall5.position.z + playerSize;
     }
 
 }
