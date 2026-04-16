@@ -57,6 +57,9 @@ controls.addEventListener('unlock', function () {
     crosshair.style.opacity = '0';
 });
 
+
+// CONTROLS FOR MOVEMENT =============================================================
+
 let moveForward = false;
 let moveBackward = false;
 let moveRight = false;
@@ -103,6 +106,8 @@ window.addEventListener("keyup", function (e) {
     }
 })
 
+// MATERIALS =============================================================
+
 const textureLoader = new THREE.TextureLoader();
 //from official three.js github
 const floorRoughness = textureLoader.load('textures/hardwood2_roughness.jpg');
@@ -137,6 +142,7 @@ floorDiffuse.wrapS = floorDiffuse.wrapT = THREE.RepeatWrapping;
 floorBump.wrapS = floorBump.wrapT = THREE.RepeatWrapping;
 floorRoughness.wrapS = floorRoughness.wrapT = THREE.RepeatWrapping;
 
+// BUTTONS =============================================================
 
 const buttonOne = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.5), buttonOnematerial);
 scene.add(buttonOne);
@@ -162,6 +168,7 @@ const buttonSix = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 0.25), buttonTwom
 scene.add(buttonSix);
 buttonRand6();
 
+// REMOVABLE WALLS =============================================================
 
 let removableWall1 = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
@@ -203,6 +210,8 @@ let removableWall6 = new THREE.Mesh(
 );
 removableWall6.position.set(0, 1.75, -305);
 scene.add(removableWall6);
+
+// RAYCASTER/BUTTONS LOGIC =============================================================
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -255,6 +264,8 @@ function onMouseClick(event) {
         return;
     }
 }
+
+// REMOVE WALL FUNCTIONS =============================================================
 
 function removeWall1() {
     if (removableWall1) {
@@ -374,6 +385,8 @@ pillarStartX.forEach((pillar, i) => {
     });
 });
 
+// MAIN STRUCTURE OF BUILDING =============================================================
+
 window.addEventListener('click', onMouseClick);
 //left wall
 const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(length, height), wallmaterial);
@@ -396,7 +409,7 @@ ceiling.rotation.x = Math.PI / 2;
 ceiling.position.set(0, height, - length / 2);
 scene.add(ceiling);
 
-
+// OBSTACLES LEVEL 2 =============================================================
 
 const obs1b = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
 obs1b.position.set(-2, height / 2, -85);
@@ -418,6 +431,7 @@ const obs5b = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
 obs5b.position.set(0, height / 2, -95);
 scene.add(obs5b);
 
+// OBSTACLES LEVEL 3 =============================================================
 
 const obs1c = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
 obs1c.position.set(-2, height / 2, -122);
@@ -445,6 +459,8 @@ obs5c.position.set(-2, height / 2, -130);
 obs5c.rotation.y = -Math.PI / 2.5;
 obs5c.rotation.x = -Math.PI / 2.5;
 scene.add(obs5c);
+
+// OBSTACLES LEVEL 4 =============================================================
 
 const obs1d = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 3), tempObsMaterial);
 obs1d.position.set(-2, height / 2, -190);
@@ -483,6 +499,8 @@ const obs7d = new THREE.Mesh(new THREE.BoxGeometry(20, 5, 3), tempObsMaterial);
 obs7d.position.set(4, 5, -180);
 obs7d.rotation.y = -Math.PI;
 scene.add(obs7d);
+
+// OBSTACLES LEVEL 5 =============================================================
 
 const obs1e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
 obs1e.position.set(0, height / 2, -265);
@@ -676,6 +694,8 @@ const obs48e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
 obs48e.position.set(2, height / 2, -301);
 scene.add(obs48e);
 
+
+
 //player size for collision detection
 const playerSize = 0.5;
 //bounds for the player to stay within the room
@@ -688,7 +708,6 @@ const bounds = {
 
 const lights = new THREE.AmbientLight(0x404060, 0.5);
 
-
 const spacing = length / 20;
 for (let i = 0; i < 20; i++) {
     const light = new THREE.PointLight(0xFADB38, 5.9, 12);
@@ -696,6 +715,8 @@ for (let i = 0; i < 20; i++) {
     scene.add(light);
 }
 scene.add(lights);
+
+// RANDOM BUTTON LOCATIONS =============================================================
 
 function buttonRand1() {
     const buttonSpotNumber = Math.random();
@@ -712,6 +733,7 @@ function buttonRand1() {
         buttonOne.position.set(-2.49, 1.75, -25);
     }
 }
+
 function buttonRand2() {
     const buttonSpotNumber = Math.random();
     if (buttonSpotNumber < .33) {
@@ -728,6 +750,7 @@ function buttonRand2() {
     }
     console.log(buttonTwo.position)
 }
+
 function buttonRand3() {
     const buttonSpotNumber = Math.random();
     if (buttonSpotNumber < .33) {
@@ -743,6 +766,7 @@ function buttonRand3() {
         buttonThree.rotation.x = Math.PI / 2;
     }
 }
+
 function buttonRand4() {
     const buttonSpotNumber = Math.random();
     if (buttonSpotNumber < .33) {
@@ -759,6 +783,7 @@ function buttonRand4() {
         buttonFour.rotation.x = -Math.PI / 2;
     }
 }
+
 function buttonRand5() {
     const buttonSpotNumber = Math.random();
     if (buttonSpotNumber < .33) {
@@ -781,6 +806,7 @@ function buttonRand5() {
 
     }
 }
+
 function buttonRand6() {
     const buttonSpotNumber = Math.random();
     
@@ -797,10 +823,11 @@ function buttonRand6() {
         buttonSix.rotation.x = Math.PI / 2;
     }
 }
+
 function animate() {
     window.requestAnimationFrame(animate)
 
-    const walkSpeed = isSprinting ? 0.40 : 0.04;
+    const walkSpeed = isSprinting ? 0.20 : 0.04;
 
 
     if (moveForward) controls.moveForward(walkSpeed);
