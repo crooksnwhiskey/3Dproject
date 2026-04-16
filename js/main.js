@@ -4,6 +4,8 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 
 const audio = document.getElementById('background-music');
 
+let gameStarted = true;
+
 // Enable looping via the property
 audio.loop = true;
 
@@ -57,7 +59,6 @@ controls.addEventListener('unlock', function () {
     crosshair.style.opacity = '0';
 });
 
-
 // CONTROLS FOR MOVEMENT =============================================================
 
 let moveForward = false;
@@ -84,7 +85,7 @@ window.addEventListener("keydown", function (e) {
     // teleporting to fix stuff easier                          READ THIS< ALEX ik emmets ass aint doing it <- jackass - emmett
     if (e.keyCode == 84) {
         bounds.minZ = -length + playerSize;
-        camera.position.set(0, camera.position.y, -260);
+        camera.position.set(0, camera.position.y, -440);
     }
 })
 
@@ -114,7 +115,7 @@ const floorRoughness = textureLoader.load('textures/hardwood2_roughness.jpg');
 const floorDiffuse = textureLoader.load('textures/hardwood2_diffuse.jpg');
 const floorBump = textureLoader.load('textures/hardwood2_bump.jpg');
 //sizes for the room
-const length = 350;
+const length = 450;
 const width = 5;
 const height = 3.5;
 //materials for the walls, floor, and ceiling and buttons
@@ -129,6 +130,7 @@ const floormaterial = new THREE.MeshStandardMaterial({
 const ceilingmaterial = new THREE.MeshStandardMaterial({ color: 0xc5c6c7 });
 const buttonOnematerial = new THREE.MeshStandardMaterial({ color: 0x222230 });
 const buttonTwomaterial = new THREE.MeshStandardMaterial({ color: 0x222230 });
+const finalButtonMaterial = new THREE.MeshStandardMaterial({ color: 0xC20E01 });
 const tempObsMaterial = new THREE.MeshStandardMaterial({ color: 0xc5c6c7 });
 
 
@@ -167,6 +169,11 @@ buttonRand5()
 const buttonSix = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 0.25), buttonTwomaterial);
 scene.add(buttonSix);
 buttonRand6();
+
+const buttonSeven = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 2.5), finalButtonMaterial);
+buttonSeven.position.set(0, 1, -length + 0.01);
+scene.add(buttonSeven);
+
 
 // REMOVABLE WALLS =============================================================
 
@@ -245,7 +252,7 @@ function onMouseClick(event) {
     const hitsFour = raycaster.intersectObject(buttonFour);
     if (hitsFour.length > 0) {
         buttonFour.material.color.setHex(0xff0000);
-        setTimeout(() => buttonThree.material.color.setHex(0x222230), 200);
+        setTimeout(() => buttonFour.material.color.setHex(0x222230), 200);
         removeWall4();
         return;
     }
@@ -263,6 +270,13 @@ function onMouseClick(event) {
         removeWall6();
         return;
     }
+    const hitsSeven = raycaster.intersectObject(buttonSeven);
+    if (hitsSeven.length > 0) {
+        buttonSeven.material.color.setHex(0x73D673);
+        setTimeout(() => buttonSeven.material.color.setHex(0x222230), 200);
+        gameReset();
+        return;
+    }
 }
 
 // REMOVE WALL FUNCTIONS =============================================================
@@ -270,36 +284,24 @@ function onMouseClick(event) {
 function removeWall1() {
     if (removableWall1) {
         scene.remove(removableWall1);
-        removableWall1.geometry.dispose();
-        removableWall1.material.dispose();
-        removableWall1 = null;
         bounds.minZ = removableWall2.position.z + playerSize;
     }
 }
 function removeWall2() {
     if (removableWall2) {
         scene.remove(removableWall2);
-        removableWall2.geometry.dispose();
-        removableWall2.material.dispose();
-        removableWall2 = null;
         bounds.minZ = removableWall3.position.z + playerSize;
     }
 }
 function removeWall3() {
     if (removableWall3) {
         scene.remove(removableWall3);
-        removableWall3.geometry.dispose();
-        removableWall3.material.dispose();
-        removableWall3 = null;
         bounds.minZ = removableWall4.position.z + playerSize;
     }
 }
 function removeWall4() {
     if (removableWall4) {
         scene.remove(removableWall4);
-        removableWall4.geometry.dispose();
-        removableWall4.material.dispose();
-        removableWall4 = null;
         bounds.minZ = removableWall5.position.z + playerSize;
     }
 
@@ -307,18 +309,13 @@ function removeWall4() {
 function removeWall5() {
     if (removableWall5) {
         scene.remove(removableWall5);
-        removableWall5.geometry.dispose();
-        removableWall5.material.dispose();
-        removableWall5 = null;
         bounds.minZ = removableWall6.position.z + playerSize;
     }
 }
 function removeWall6() {
     if (removableWall6) {
         scene.remove(removableWall6);
-        removableWall6.geometry.dispose();
-        removableWall6.material.dispose();
-        removableWall6 = null;
+        gameStarted = false;
         bounds.minZ = -length + playerSize;
     }
 }
@@ -352,6 +349,15 @@ cctvPositions.forEach(pos => {
     });
 
 });
+
+loader.load('models/exit_sign.glb', (gltf) => {
+    const exitSign = gltf.scene;
+    exitSign.scale.set(0.02, 0.02, 0.02);
+    exitSign.position.set(0, 2.8, -length - 0.02);
+    exitSign.rotation.y = Math.PI;
+    scene.add(exitSign);
+});
+
 const pillarStartZ = -220;
 const pillarStartX = [
     { x: -1.9 }, { x: 0.3 },
@@ -824,11 +830,41 @@ function buttonRand6() {
     }
 }
 
+function gameReset() {
+    if (!gameStarted) {
+        escapeMessageText();
+    }
+    scene.add(removableWall1);
+    scene.add(removableWall2);
+    scene.add(removableWall3);
+    scene.add(removableWall4);
+    scene.add(removableWall5);
+    scene.add(removableWall6);
+    buttonRand1();
+    buttonRand2();
+    buttonRand3();
+    buttonRand4();
+    buttonRand5();
+    buttonRand6();
+    camera.position.set(0, 1.75, 0);
+    bounds.minZ = removableWall1.position.z + playerSize;
+}
+
+function escapeMessageText() {
+    const textElement = document.getElementById('escape-message');
+    textElement.style.visibility = 'visible';
+    textElement.style.opacity = '1';
+    textElement.style.display = 'block';
+    setTimeout(() => {
+        textElement.style.transition = 'opacity 2s ease-in-out';
+        textElement.style.opacity = '0';
+    }, 3000);
+}
+    
 function animate() {
     window.requestAnimationFrame(animate)
 
     const walkSpeed = isSprinting ? 0.20 : 0.04;
-
 
     if (moveForward) controls.moveForward(walkSpeed);
     if (moveBackward) controls.moveForward(-walkSpeed);

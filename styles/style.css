@@ -48,5 +48,24 @@ iframe {
     letter-spacing: 2px;
     -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 65%);
     mask-image: radial-gradient(ellipse at center, black 40%, transparent 65%);
+}
 
+#escape-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-family: 'Black Ops One', system-ui; 
+    font-size: 5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 12px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 100;
 }
