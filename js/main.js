@@ -81,7 +81,7 @@ window.addEventListener("keydown", function (e) {
     // teleporting to fix stuff easier                          READ THIS< ALEX ik emmets ass aint doing it <- jackass - emmett
     if (e.keyCode == 84) {
         bounds.minZ = -length + playerSize;
-        camera.position.set(0, camera.position.y, -220);
+        camera.position.set(0, camera.position.y, -260);
     }
 })
 
@@ -158,6 +158,11 @@ const buttonFive = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.5), buttonTwoma
 scene.add(buttonFive);
 buttonRand5()
 
+const buttonSix = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 0.25), buttonTwomaterial);
+scene.add(buttonSix);
+buttonRand6();
+
+
 let removableWall1 = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
     new THREE.MeshStandardMaterial({ color: 0x444444 })
@@ -184,12 +189,20 @@ let removableWall4 = new THREE.Mesh(
 );
 removableWall4.position.set(0, 1.75, -210);
 scene.add(removableWall4);
+
 let removableWall5 = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
     new THREE.MeshStandardMaterial({ color: 0x444444 })
 );
 removableWall5.position.set(0, 1.75, -260);
 scene.add(removableWall5);
+
+let removableWall6 = new THREE.Mesh(
+    new THREE.PlaneGeometry(width, height),
+    new THREE.MeshStandardMaterial({ color: 0x444444 })
+);
+removableWall6.position.set(0, 1.75, -305);
+scene.add(removableWall6);
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -232,6 +245,13 @@ function onMouseClick(event) {
         buttonFive.material.color.setHex(0xff0000);
         setTimeout(() => buttonFive.material.color.setHex(0x222230), 200);
         removeWall5();
+        return;
+    }
+    const hitsSix = raycaster.intersectObject(buttonSix);
+    if (hitsSix.length > 0) {
+        buttonSix.material.color.setHex(0xff0000);
+        setTimeout(() => buttonSix.material.color.setHex(0x222230), 200);
+        removeWall6();
         return;
     }
 }
@@ -279,9 +299,19 @@ function removeWall5() {
         removableWall5.geometry.dispose();
         removableWall5.material.dispose();
         removableWall5 = null;
+        bounds.minZ = removableWall6.position.z + playerSize;
+    }
+}
+function removeWall6() {
+    if (removableWall6) {
+        scene.remove(removableWall6);
+        removableWall6.geometry.dispose();
+        removableWall6.material.dispose();
+        removableWall6 = null;
         bounds.minZ = -length + playerSize;
     }
 }
+
 // Camera Model from https://sketchfab.com/3d-models/surveillance-camera-cd2a7ca0211d4fc08acc88ce868c2f8f
 const cctv = [];
 const loader = new GLTFLoader();
@@ -454,6 +484,197 @@ obs7d.position.set(4, 5, -180);
 obs7d.rotation.y = -Math.PI;
 scene.add(obs7d);
 
+const obs1e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs1e.position.set(0, height / 2, -265);
+scene.add(obs1e);
+
+const obs2e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs2e.position.set(-2, height / 2, -265);
+scene.add(obs2e);
+
+const obs3e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs3e.position.set(2, height / 2, -265);
+scene.add(obs3e);
+
+const obs4e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs4e.position.set(1, height / 2, -267);
+scene.add(obs4e);
+
+const obs5e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs5e.position.set(-1, height / 2, -267);
+scene.add(obs5e);
+
+const obs6e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs6e.position.set(0, height / 2, -269);
+scene.add(obs6e);
+
+const obs7e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs7e.position.set(-2, height / 2, -269);
+scene.add(obs7e);
+
+const obs8e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs8e.position.set(2, height / 2, -269);
+scene.add(obs8e);
+
+const obs9e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs9e.position.set(1, height / 2, -271);
+scene.add(obs9e);
+
+const obs10e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs10e.position.set(-1, height / 2, -271);
+scene.add(obs10e);
+
+const obs11e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs11e.position.set(0, height / 2, -273);
+scene.add(obs11e);
+
+const obs12e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs12e.position.set(-2, height / 2, -273);
+scene.add(obs12e);
+
+const obs13e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs13e.position.set(2, height / 2, -273);
+scene.add(obs13e);
+
+const obs14e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs14e.position.set(1, height / 2, -275);
+scene.add(obs14e);
+
+const obs15e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs15e.position.set(-1, height / 2, -275);
+scene.add(obs15e);
+
+const obs16e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs16e.position.set(0, height / 2, -277);
+scene.add(obs16e);
+
+const obs17e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs17e.position.set(-2, height / 2, -277);
+scene.add(obs17e);
+
+const obs18e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs18e.position.set(2, height / 2, -277);
+scene.add(obs18e);
+
+const obs19e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs19e.position.set(1, height / 2, -279);
+scene.add(obs19e);
+
+const obs20e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs20e.position.set(-1, height / 2, -279);
+scene.add(obs20e);
+
+const obs21e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs21e.position.set(0, height / 2, -281);
+scene.add(obs21e);
+
+const obs22e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs22e.position.set(-2, height / 2, -281);
+scene.add(obs22e);
+
+const obs23e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs23e.position.set(2, height / 2, -281);
+scene.add(obs23e);
+
+const obs24e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs24e.position.set(1, height / 2, -283);
+scene.add(obs24e);
+
+const obs25e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs25e.position.set(-1, height / 2, -283);
+scene.add(obs25e);
+
+const obs26e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs26e.position.set(0, height / 2, -285);
+scene.add(obs26e);
+
+const obs27e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs27e.position.set(-2, height / 2, -285);
+scene.add(obs27e);
+
+const obs28e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs28e.position.set(2, height / 2, -285);
+scene.add(obs28e);
+
+const obs29e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs29e.position.set(1, height / 2, -287);
+scene.add(obs29e);
+
+const obs30e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs30e.position.set(-1, height / 2, -287);
+scene.add(obs30e);
+
+const obs31e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs31e.position.set(0, height / 2, -289);
+scene.add(obs31e);
+
+const obs32e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs32e.position.set(-2, height / 2, -289);
+scene.add(obs32e);
+
+const obs33e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs33e.position.set(2, height / 2, -289);
+scene.add(obs33e);
+
+const obs34e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs34e.position.set(1, height / 2, -291);
+scene.add(obs34e);
+
+const obs35e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs35e.position.set(-1, height / 2, -291);
+scene.add(obs35e);
+
+const obs36e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs36e.position.set(0, height / 2, -293);
+scene.add(obs36e);
+
+const obs37e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs37e.position.set(-2, height / 2, -293);
+scene.add(obs37e);
+
+const obs38e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs38e.position.set(2, height / 2, -293);
+scene.add(obs38e);
+
+const obs39e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs39e.position.set(1, height / 2, -295);
+scene.add(obs39e);
+
+const obs40e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs40e.position.set(-1, height / 2, -295);
+scene.add(obs40e);
+
+const obs41e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs41e.position.set(0, height / 2, -297);
+scene.add(obs41e);
+
+const obs42e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs42e.position.set(-2, height / 2, -297);
+scene.add(obs42e);
+
+const obs43e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs43e.position.set(2, height / 2, -297);
+scene.add(obs43e);
+
+const obs44e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs44e.position.set(1, height / 2, -299);
+scene.add(obs44e);
+
+const obs45e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs45e.position.set(-1, height / 2, -299);
+scene.add(obs45e);
+
+const obs46e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs46e.position.set(0, height / 2, -301);
+scene.add(obs46e);
+
+const obs47e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs47e.position.set(-2, height / 2, -301);
+scene.add(obs47e);
+
+const obs48e = new THREE.Mesh(new THREE.BoxGeometry(1, 10, 1), tempObsMaterial);
+obs48e.position.set(2, height / 2, -301);
+scene.add(obs48e);
 
 //player size for collision detection
 const playerSize = 0.5;
@@ -475,6 +696,7 @@ for (let i = 0; i < 20; i++) {
     scene.add(light);
 }
 scene.add(lights);
+
 function buttonRand1() {
     const buttonSpotNumber = Math.random();
     if (buttonSpotNumber < .33) {
@@ -559,11 +781,26 @@ function buttonRand5() {
 
     }
 }
-
+function buttonRand6() {
+    const buttonSpotNumber = Math.random();
+    
+    if (buttonSpotNumber < .33) {
+        buttonSix.position.set(2.49, 1.75, -278);
+        buttonSix.rotation.y = -Math.PI / 2;
+    } 
+    if (buttonSpotNumber >= .33 && buttonSpotNumber < .66) {
+        buttonSix.position.set(0, 0.01, -292);
+        buttonSix.rotation.x = -Math.PI / 2;
+    } 
+    if (buttonSpotNumber >= .66) {
+        buttonSix.position.set(-1.5, 3.49, -298);
+        buttonSix.rotation.x = Math.PI / 2;
+    }
+}
 function animate() {
     window.requestAnimationFrame(animate)
 
-    const walkSpeed = isSprinting ? 0.20 : 0.04;
+    const walkSpeed = isSprinting ? 0.40 : 0.04;
 
 
     if (moveForward) controls.moveForward(walkSpeed);
